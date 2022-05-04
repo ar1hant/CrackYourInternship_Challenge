@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int maxScore(vector<int>& v, int k) {
+        int n = v.size();
+        int sum = 0;
+        for(int i = 0; i <k;i++)
+            sum += v[i];
+        int index = k;
+        int mx = sum;
+        for(int i = n - 1;i >= n - k;i--){
+            sum += v[i] - v[--index];
+            mx = max(mx, sum);
+        }
+        return mx;
+    }
+};

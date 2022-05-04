@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int subarraysDivByK(vector<int>& nums, int k) {
+        int sum = 0, c = 0;
+        unordered_map<int, int> mp;
+        for(int x : nums){
+            sum += x;
+            int temp = sum % k;
+            if(temp < 0)
+                temp += k;
+            if(!temp)
+                c++;
+            if(mp.find(temp) != mp.end()){
+                c += mp[temp];
+                mp[temp]++;
+            }
+            else
+                mp.insert({temp, 1});
+        }
+        return c;
+    }
+};
