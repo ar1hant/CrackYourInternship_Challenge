@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool util(vector<vector<char>> &board, string word, int i, int j, int n, int m){
+        if(word.empty() || i < 0 || i >= n || j < 0 || j >= m || word[0] != board[i][j])
+            return 0;
+        if(word.size() == 1)
+            return 1;
+        char ch = board[i][j];
+        bool flag = 0;
+        board[i][j] = '\0';
+        word = word.substr(1);
+        if(util(board, word, i + 1, j, n, m) || util(board, word, i - 1, j, n, m) || util(board, word, i, j + 1, n, m) || util(board, word, i, j - 1, n, m))
+            flag = 1;
+        board[i][j] = ch;
+        return flag;
+    }
+    bool exist(vector<vector<char>>& board, string word) {
+        int n = board.size();
+        int m = board[0].size();
+        vector<vector<bool>> visisted(n, vector<bool>(m, 0));
+        for(int i = 0;i < n;i++){
+            for(int j = 0;j < m;j++)
+                if(board[i][j] == word[0] && util(board, word, i, j, n, m))
+                    return 1;
+        }
+        return 0;
+    }
+};

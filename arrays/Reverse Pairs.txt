@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int merge(vector<int> &v, int start, int mid, int end){
+        int i = start, j = mid + 1, count = 0;
+        while(i <= mid && j <= end){
+            if((long)v[i] > (long)2 * v[j]){
+                count += mid - i + 1;
+                j++;
+            }
+            else
+                i++;
+        }
+        sort(v.begin() + start, v.begin() + end + 1);
+        return count;
+    }
+    int mergeSort(vector<int> &v, int start, int end){
+        int res = 0;
+        if(start < end){
+            int mid = (end + start) >> 1;
+            res += mergeSort(v, start, mid) + mergeSort(v, mid + 1, end) + merge(v, start, mid, end);
+        }
+        return res;
+    }
+    int reversePairs(vector<int>& nums) {
+        return mergeSort(nums, 0, nums.size() - 1);
+    }
+};
