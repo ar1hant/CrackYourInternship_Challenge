@@ -1,4 +1,4 @@
-class Solution {
+class Solution{
 public:
     int findDuplicate(vector<int>& nums) {
         int a = 0, b = 0;
