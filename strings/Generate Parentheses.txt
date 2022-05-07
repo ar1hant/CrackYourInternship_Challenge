@@ -1,0 +1,19 @@
+void util(vector<string> &ans, int n, int openBrack, int closeBrack, string s){
+    if(s.size() == n * 2){
+        ans.push_back(s);
+        return;
+    }
+    if(openBrack < n)
+        util(ans, n, openBrack + 1, closeBrack, s + '(');
+    if(closeBrack < openBrack)
+        util(ans, n, openBrack, closeBrack + 1, s + ')');
+}
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> ans;
+        util(ans, n, 0, 0, "");
+        return ans;
+    }
+};
