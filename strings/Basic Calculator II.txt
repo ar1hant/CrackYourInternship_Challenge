@@ -1,0 +1,58 @@
+class Solution {
+public:
+    int operation(int val1, int val2, char opertor) {
+        if (opertor == '+')
+            return val1 + val2;
+
+        else if (opertor == '-')
+            return val1 - val2;
+
+        else if (opertor == '/')
+            return val1 / val2;
+
+        else
+            return val1 * val2;
+    }
+    
+    int precedence(char ch){
+        if(ch == '-' || ch == '+')
+            return 1;
+        else
+            return 2;
+    }
+    
+    int calculate(string s) {
+        int n = s.length();
+        stack<char> opr;
+        stack<int> opnd;
+        for(int i = 0;i < n;i++){
+            if(s[i] >= '0' && s[i] <= '9'){
+                int val = 0;
+                while(i < n && s[i] >= '0' && s[i] <= '9')
+                    val = val * 10 + (s[i++] - '0');
+                i--;
+                opnd.push(val);
+            }
+            else if(s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/'){
+                while(!opr.empty() && precedence(opr.top()) >= precedence(s[i])){
+                    int x = opnd.top();
+                    opnd.pop();
+                    int y = opnd.top();
+                    opnd.pop();
+                    opnd.push(operation(y, x, opr.top()));
+                    opr.pop();
+                }
+                opr.push(s[i]);
+            }
+        }
+        while(!opr.empty()){
+            int x = opnd.top();
+            opnd.pop();
+            int y = opnd.top();
+            opnd.pop();
+            opnd.push(operation(y, x, opr.top()));
+            opr.pop();
+        }
+        return opnd.top();
+    }
+};
